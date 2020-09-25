@@ -1,2 +1,5 @@
 # mouse_graphics
-Experiment to record mouse move and replay
+<p align="center">
+  <img width="386" height="353" src="mouse.png">
+</p>
+Experiment to record mouse moves and later replay

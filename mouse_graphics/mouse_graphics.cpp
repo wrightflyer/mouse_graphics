@@ -5,6 +5,7 @@
 #include "mouse_graphics.h"
 
 #define MAX_LOADSTRING 100
+#define BRUSH_W 3 // really double this as it's -n to +n
 
 // Global Variables:
 HINSTANCE hInst;                                // current instance
@@ -205,7 +206,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             HDC hdc;
             hdc = GetDC(hWnd);
             SelectObject(hdc, GetStockObject(BLACK_BRUSH));
-            Ellipse(hdc, coords[mouse_idx].x - 2, coords[mouse_idx].y - 2, coords[mouse_idx].x + 2, coords[mouse_idx].y + 2);
+            Ellipse(hdc, coords[mouse_idx].x - BRUSH_W, coords[mouse_idx].y - BRUSH_W, coords[mouse_idx].x + BRUSH_W, coords[mouse_idx].y + BRUSH_W);
             ReleaseDC(hWnd, hdc);
             mouse_idx++;
             if (mouse_idx >= 4999) {
@@ -216,14 +217,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_RBUTTONUP:
         // if right clicked start timed redraw...
         InvalidateRect(hWnd, NULL, true);
-        SetTimer(hWnd, 1, 8, NULL);
+        SetTimer(hWnd, 1, 5, NULL);
         break;
     case WM_TIMER:
         if (draw_idx < mouse_idx) {
             HDC hdc;
             hdc = GetDC(hWnd);
             SelectObject(hdc, GetStockObject(BLACK_BRUSH));
-            Ellipse(hdc, coords[draw_idx].x - 2, coords[draw_idx].y - 2, coords[draw_idx].x + 2, coords[draw_idx].y + 2);
+            Ellipse(hdc, coords[draw_idx].x - BRUSH_W, coords[draw_idx].y - BRUSH_W, coords[draw_idx].x + BRUSH_W, coords[draw_idx].y + BRUSH_W);
             draw_idx++;
             if (draw_idx >= mouse_idx) {
                 KillTimer(hWnd, 1);
