@@ -19,6 +19,20 @@ LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
 COLORREF arr_screen[320 * 240];
+int mouse_idx;
+typedef struct {
+	int x;
+	int y;
+} mouse_pair;
+
+mouse_pair coords[5000];
+
+typedef struct {
+	int x;
+	int y;
+} points_t;
+
+extern  points_t points[];
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
@@ -115,11 +129,17 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
        G = rand() & 0xFF;
        B = rand() & 0xFF;
 #endif
-       R = 240;
-       G = 240;
-       B = 240;
+       R = 196;
+       G = 196;
+       B = 195;
        arr_screen[n] = (B << 16) | (G << 8) | R;
    }
+
+   for (int i = 0; i < 1280; i++) {
+	   coords[i].x = points[i].x;
+	   coords[i].y = points[i].y;
+   }
+   mouse_idx = 1280;
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
@@ -127,13 +147,6 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    return TRUE;
 }
 
-int mouse_idx;
-typedef struct {
-    int x;
-    int y;
-} mouse_pair;
-
-mouse_pair coords[5000];
 
 void clear_mouse_points() {
     for (int i = 0; i < 5000; i++) {
@@ -168,6 +181,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             case IDM_ABOUT:
                 DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
                 break;
+			case ID_FILE_CLEARPOINTS:
+				clear_mouse_points();
+				break;
             case IDM_EXIT:
                 DestroyWindow(hWnd);
                 break;

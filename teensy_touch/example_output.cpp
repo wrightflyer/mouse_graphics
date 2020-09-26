@@ -3,7 +3,7 @@ typedef struct {
   int y;
 } points_t;
 
-const points_t points[] = {
+points_t points[] = {
   { 44,33 },
   { 30,19 },
   { 30,20 },

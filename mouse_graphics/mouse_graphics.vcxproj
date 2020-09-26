@@ -158,6 +158,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\teensy_touch\example_output.cpp" />
     <ClCompile Include="mouse_graphics.cpp" />
   </ItemGroup>
   <ItemGroup>
